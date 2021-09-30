@@ -80,9 +80,19 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
     group = re.match(r'group_(.*?)_.*', event.get_session_id())
     if group:
         async with aiohttp.ClientSession() as session:
-            async with session.get(url="https://minecraft.fandom.com/zh/api.php?action=query&list=abuselog&aflprop=user|title|action|result|filter|timestamp&afllimit&format=json") as req:
+            async with session.get(url="https://minecraft.fandom.com/zh/api.php?action=query&list=abuselog&aflprop=user|title|action|result|filter|timestamp&afllimit=99&format=json") as req:
                 j = json.loads(await req.text())
                 nodelist = []
+                nodelist.append(
+                        {
+                            "type": "node",
+                            "data": {
+                                "name": f"滥用过滤器日志地址",
+                                "uin": "2314163511",
+                                "content": [{"type": "text", "data": {"text": 'https://minecraft.fandom.com/zh/wiki/Special:AbuseLog'}}],
+                                'time': str(datetime.strptime(x['timestamp'], "%Y-%m-%dT%H:%M:%SZ") + timedelta(hours=8))
+                            }
+                        })
                 for x in j["query"]["abuselog"]:
                     t = []
                     t.append(f"用户：{x['user']}")
