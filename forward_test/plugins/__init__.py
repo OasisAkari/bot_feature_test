@@ -4,7 +4,7 @@ from nonebot.adapters import Event
 from nonebot.adapters.cqhttp.bot import Bot
 import aiohttp
 import re
-import json
+import ujson as json
 from .utc8 import UTC8
 from .log_cn import action
 import urllib.parse
